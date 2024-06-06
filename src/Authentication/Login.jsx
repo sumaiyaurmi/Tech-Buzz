@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signIn, signInWithGoogle } = useContext(AuthContext);
@@ -31,7 +32,10 @@ const Login = () => {
           },
         }
       );
-    } catch (err) {
+       
+
+    }
+     catch (err) {
       console.log(err.message);
       toast(err.message, {
         icon: '❌',
@@ -49,10 +53,27 @@ const Login = () => {
     try {
       const result = await signInWithGoogle();
       console.log(result);
-
       navigate(from);
+      toast('User Log In Successfully',
+        {
+          icon: '✔️',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        }
+      );
     } catch (err) {
       console.log(err);
+      toast(err.message, {
+        icon: '❌',
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
     }
   };
 

@@ -36,9 +36,8 @@ const Navbar = () => {
         <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={"/assignments"}>Assignments</NavLink>
+        <NavLink to={"/product"}>Products</NavLink>
       </li>
-      
     </>
   );
 
@@ -61,7 +60,7 @@ const Navbar = () => {
   }, [theme]);
 
   return (
-    <div className="navbar fixed z-10 container mx-auto bg-opacity-30 text-white bg-black">
+    <div className="navbar fixed z-10 container mx-auto bg-opacity-20 text-white bg-yellow-400">
       <div className="navbar-start ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -172,20 +171,24 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <><Link to={"/login"}>
-          <button className="btn bg-black text-white mr-2 hover:text-yellow-600 hover:bg-black
-           border-yellow-600 hover:border-0">
-            Login
-          </button>
-        </Link>
-        <Link to={"/sign-up"}>
-            <button
-              className="btn bg-black text-white hover:text-yellow-600 hover:bg-black
+          <>
+            <Link to={"/login"}>
+              <button
+                className="btn bg-black text-white mr-2 hover:text-yellow-600 hover:bg-black
            border-yellow-600 hover:border-0"
-            >
-              Sign Up
-            </button>
-          </Link></>
+              >
+                Login
+              </button>
+            </Link>
+            <Link to={"/sign-up"}>
+              <button
+                className="btn bg-black text-white hover:text-yellow-600 hover:bg-black
+           border-yellow-600 hover:border-0"
+              >
+                Sign Up
+              </button>
+            </Link>
+          </>
         )}
       </div>
     </div>
