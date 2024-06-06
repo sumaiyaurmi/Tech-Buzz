@@ -180,7 +180,7 @@ const Navbar = () => {
                 Login
               </button>
             </Link>
-            <Link to={"/sign-up"}>
+            <Link to={"/signUp"}>
               <button
                 className="btn bg-black text-white hover:text-yellow-600 hover:bg-black
            border-yellow-600 hover:border-0"
