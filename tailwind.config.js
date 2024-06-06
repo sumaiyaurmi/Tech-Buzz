@@ -4,9 +4,16 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],  theme: {
-    extend: {},
-  },
+    extend: {
+      fontFamily: {
+        Mon: "'Montserrat', 'sans-serif' ",
+      },
+    },  },
   plugins: [
     require('daisyui'),
-  ],}
+  ],
+  daisyui: {
+    themes: ["light", "sunset"],
+  },
+}
 
