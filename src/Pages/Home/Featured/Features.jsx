@@ -22,20 +22,17 @@ const Features = () => {
   };
 
   const handleUpVote = async (id, votes) => {
-
-    console.log(id,votes)
-
     if (!user) {
       navigate("/login");
       return;
     }
 
-    const { data } = await axiosPublic.patch(`/featuredProducts/${id}`,{ votes });
-      console.log(data);
-      getData();
+    const { data } = await axiosPublic.patch(`/featuredProducts/${id}`, {
+      votes,
+    });
+    console.log(data);
+    getData();
   };
-  console.log(user?.email)
-
 
   return (
     <div className="my-6 space-y-4 pb-4">
@@ -67,7 +64,7 @@ const Features = () => {
               </div>
               <div className="card-actions justify-end">
                 <button
-                disabled={user?.email === product.email}
+                  disabled={user?.email === product.CreatorEmail}
                   onClick={() => handleUpVote(product._id, product.votes + 1)}
                   className="btn  rounded-full
                  bg-black text-yellow-600 gap-0 text-lg"
