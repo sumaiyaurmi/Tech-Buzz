@@ -1,68 +1,72 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../Providers/AuthProvider/AuthProvider';
+import useAxiosPublic from '../../../UseHooks/UseAxiosPublic';
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
-import useAxiosPublic from "../../../UseHooks/UseAxiosPublic";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { imageUpload } from "../../../Components/Utils";
+import toast from 'react-hot-toast';
+import { imageUpload } from '../../../Components/Utils';
 
-const AddProducts = () => {
-  const [selected, setSelected] = useState(["AI"]);
-  const [startDate, setStartDate] = useState(new Date());
-  const { user } = useContext(AuthContext);
-  const axiosPublice = useAxiosPublic();
-  const navigate = useNavigate();
+const UpdatedMyProduct = () => {
 
-  const handleAddProduct = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const description = form.description.value;
-    const links = form.links.value;
-    const timestamp = startDate;
-    const image = form.image.files[0];
+    const product=useLoaderData()
+    const [selected, setSelected] = useState(["AI"]);
+    const [startDate, setStartDate] = useState(new Date(product.timestamp));
+    const { user } = useContext(AuthContext);
+    const axiosPublice = useAxiosPublic();
+    const navigate = useNavigate();
 
-    try {
-      const image_url = await imageUpload(image);
-
-      const productData = {
-        name,
-        description,
-        image: image_url,
-        links,
-        timestamp,
-        votes: 0,
-        status: "pending",
-        tags: selected,
-        Owner: {
-          email: user?.email,
-          name: user?.displayName,
-          image: user?.photURL,
-        },
+    const handleUpdateProduct = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const description = form.description.value;
+        const links = form.links.value;
+        const timestamp = startDate;
+        const image = form.image.files[0];
+    
+        try {
+          const image_url = await imageUpload(image);
+    
+          const productData = {
+            name,
+            description,
+            image: image_url,
+            links,
+            timestamp,
+            votes: 0,
+            status: "pending",
+            tags: selected,
+            Owner: {
+              email: user?.email,
+              name: user?.displayName,
+              image: user?.photURL,
+            },
+          };
+          const { data } = await axiosPublice.put(`/products/${product._id}`,productData);
+          console.log(data);
+          toast("products Updated Successfully", {
+            icon: "👏",
+            style: {
+              borderRadius: "10px",
+              background: "#333",
+              color: "#fff",
+            },
+          });
+          navigate("/dashboard/myProducts");
+        } catch (err) {
+          console.log(err);
+          toast.error(`${err.message}`);
+        }
       };
-      const { data } = await axiosPublice.post(`/products`, productData);
-      console.log(data);
-      toast("products Added Successfully", {
-        icon: "👏",
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
-      navigate("/dashboard/myProducts");
-    } catch (err) {
-      console.log(err);
-      toast.error(`${err.message}`);
-    }
-  };
 
-  return (
-    <div>
-      <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
-        <form onSubmit={handleAddProduct} className="md:w-full ">
+    return (
+        <div>
+             <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
+        <form 
+        onSubmit={handleUpdateProduct} 
+        className="md:w-full ">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="space-y-3">
               <div className="space-y-1 text-sm">
@@ -74,6 +78,7 @@ const AddProducts = () => {
                   name="name"
                   id="name"
                   type="text"
+                  defaultValue={product.name}
                   placeholder="Name"
                   required
                 />
@@ -89,6 +94,8 @@ const AddProducts = () => {
                   className="block h-24 md:h-32 w-full px-4 py-3 text-gray-800 border border-yellow-500 focus:outline-yellow-600 rounded-md "
                   name="description"
                   required
+                  defaultValue={product.description}
+
                 ></textarea>
               </div>
               <div className="space-y-1 text-sm">
@@ -100,6 +107,7 @@ const AddProducts = () => {
                   name="links"
                   id="title"
                   type="text"
+                  defaultValue={product.links}
                   placeholder="Links"
                   required
                 />
@@ -112,7 +120,7 @@ const AddProducts = () => {
                   value={selected}
                   onChange={setSelected}
                   name="tags"
-                  required
+                  required    
                   placeHolder="enter tags"
                   classNames="w-full input px-4 py-3 text-gray-800 border border-yellow-500 focus:outline-yellow-600 rounded-md"
                 />
@@ -127,6 +135,8 @@ const AddProducts = () => {
                 name="date"
                 selected={startDate}
                 required
+                defaultValue={new Date(product.timestamp).toLocaleDateString()}
+
                 onChange={(date) => setStartDate(date)}
               />
             </div>
@@ -203,12 +213,12 @@ const AddProducts = () => {
             type="submit"
             className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
           >
-            Add Product
+            Update Product
           </button>
         </form>
       </div>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default AddProducts;
+export default UpdatedMyProduct;

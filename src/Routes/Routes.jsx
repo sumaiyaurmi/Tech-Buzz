@@ -9,6 +9,7 @@ import AddProducts from "../Pages/Dashboard/User/AddProducts";
 import MyProducts from "../Pages/Dashboard/User/MyProducts";
 import Profile from "../Pages/Dashboard/Common/Profile";
 import PrivateRoute from "../Providers/PrivateRoute/PrivateRoutes";
+import UpdatedMyProduct from "../Pages/Dashboard/User/UpdatedMyProduct";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
 {
   path:'myProducts',
   element:<MyProducts></MyProducts>
+},
+{
+  path:'updateProduct/:id',
+  element:<UpdatedMyProduct></UpdatedMyProduct>,
+  loader: ({ params }) =>
+    fetch(
+      `http://localhost:5000/productss/${params.id}`
+    ),
 },
     ])
   },

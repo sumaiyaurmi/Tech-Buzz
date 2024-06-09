@@ -5,6 +5,7 @@ import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 import { PiEmptyBold } from "react-icons/pi";
 import Swal from "sweetalert2";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const MyProducts = () => {
   const axiosPublic = useAxiosPublic();
@@ -147,9 +148,11 @@ const MyProducts = () => {
                             </td>{" "}
                           </td>
                           <td className="px-4 py-4  text-gray-500 text-lg whitespace-nowrap">
+                            <Link to={`/dashboard/updateProduct/${product._id}`}>
                             <button>
                               <FaEdit></FaEdit>
                             </button>
+                            </Link>
                           </td>
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
