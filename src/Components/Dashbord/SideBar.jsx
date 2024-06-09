@@ -2,13 +2,41 @@ import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MenuItem from "./MenuItems";
 import { FaAd, FaHome, FaPlus, FaProductHunt } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 
 const SideBar = () => {
   const [toggle, setToggle] = useState(false);
   const [isActive, setActive] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = async () => {
+    await logOut();
+    try {
+      toast("User Log In Successfully", {
+        icon: "✔️",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      toast(err.message, {
+        icon: "❌",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
+  };
+
 
   //   For guest/host menu item toggle button
   const toggleHandler = (event) => {
@@ -86,16 +114,16 @@ const SideBar = () => {
             <MenuItem
               icon={FaPlus}
               label="  Add Product"
-              address=" addProduct"
+              address="/dashboard/addProduct"
             />
-            <MenuItem icon={FaProductHunt} label=" My Products" address="myProducts" />
+            <MenuItem icon={FaProductHunt} label=" My Products" address="/dashboard/myProducts" />
           </nav>
         </div>
 
         <div>
           <hr />
 
-          <button className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform">
+          <button onClick={handleLogOut} className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform">
             <GrLogout className="w-5 h-5" />
 
             <span className="mx-4 font-medium">Logout</span>

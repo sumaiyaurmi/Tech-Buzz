@@ -8,6 +8,7 @@ import DashBoard from "../Pages/Dashboard/DashBoard/DashBoard";
 import AddProducts from "../Pages/Dashboard/User/AddProducts";
 import MyProducts from "../Pages/Dashboard/User/MyProducts";
 import Profile from "../Pages/Dashboard/Common/Profile";
+import PrivateRoute from "../Providers/PrivateRoute/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-    element:<DashBoard></DashBoard>,
+    element:<PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
     errorElement: <Error></Error>,
     children:([
 {

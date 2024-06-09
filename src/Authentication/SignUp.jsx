@@ -3,13 +3,14 @@ import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import axios from "axios";
+import { imageUpload } from "../Components/Utils";
 
 const SignUp = () => {
   const { setUser, createUser, signInWithGoogle, updateUserProfile } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state || "/";
+  const from = location.state?.from?.pathname || "/";
   const [passError, setPassError] = useState("");
   const [passSuccues, setPassSuccess] = useState("");
 
@@ -23,8 +24,7 @@ const SignUp = () => {
     const image = form.image.files[0];
     console.log(name, email, pass, image);
 
-    const formData = new FormData();
-    formData.append("image", image);
+    
 
     try {
       // clear previous message
@@ -40,23 +40,17 @@ const SignUp = () => {
         );
       }
 
-      //   upload image and get image url
-      const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_IMGBB_API_KEY
-        }`,
-        formData
-      );
-      console.log(data);
+      const image_url= await imageUpload(image)
+
 
       // User Registration
       const result = await createUser(email, pass);
       console.log(result.user);
 
       //   UserUpdate
-      await updateUserProfile(name, data.data.display_url);
+      await updateUserProfile(name, image_url);
       // Optimistic Ui Update
-      setUser({ ...result?.user, photoURL: data.data.display_url, displayName: name });
+      setUser({ ...result?.user, photoURL:image_url, displayName: name });
       navigate(from);
       toast("User Created Successfully", {
         icon: "👏",
