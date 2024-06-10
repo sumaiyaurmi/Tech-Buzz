@@ -11,6 +11,7 @@ import Profile from "../Pages/Dashboard/Common/Profile";
 import PrivateRoute from "../Providers/PrivateRoute/PrivateRoutes";
 import UpdatedMyProduct from "../Pages/Dashboard/User/UpdatedMyProduct";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
+import ProductReview from "../Pages/Dashboard/Moderator/ProductReview";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
     fetch(
       `http://localhost:5000/productss/${params.id}`
     ),
+},
+{
+  path:'modaretor-review',
+  element:<ProductReview></ProductReview>,
+  
 },
 {
   path:'admin-manage-users',

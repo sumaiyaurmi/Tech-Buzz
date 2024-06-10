@@ -3,9 +3,12 @@ import useAxiosSecure from "../../../UseHooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { MdAddModerator } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
+  const { user: loggedUser } = useContext(AuthContext);
 
   const {
     data: users = [],
@@ -20,39 +23,35 @@ const ManageUser = () => {
   });
 
   // make admin
-    const handleMakeAdmin=(user)=>{
-      axiosSecure.patch(`/users/admin/${user._id}`)
-      .then((res)=>{
-          if(res.data.modifiedCount >0){
-              refetch()
-              Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: `${user.name} is an Admin Now`,
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-
-          }
-      })
-    }
+  const handleMakeAdmin = (user) => {
+    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.name} is an Admin Now`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
   // make moderator
-    const handleMakeModerator=(user)=>{
-      axiosSecure.patch(`/users/moderator/${user._id}`)
-      .then((res)=>{
-          if(res.data.modifiedCount >0){
-              refetch()
-              Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: `${user.name} is an Moderator Now`,
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-
-          }
-      })
-    }
+  const handleMakeModerator = (user) => {
+    axiosSecure.patch(`/users/moderator/${user._id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.name} is an Moderator Now`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
 
   if (isLoading)
     return (
@@ -90,17 +89,23 @@ const ManageUser = () => {
                     {user.role}
                   </p>{" "}
                 </td>
-                <td
-                  onClick={() => handleMakeModerator(user)}
-                  className="hover:bg-slate-400 hover:rounded-full"
-                >
-                  <MdAddModerator className="text-2xl ml-7  "></MdAddModerator>
+                <td>
+                  <button
+                    disabled={loggedUser?.email === user?.email}
+                    onClick={() => handleMakeModerator(user)}
+                    className="btn  hover:rounded-full text-center "
+                  >
+                    <MdAddModerator className="text-2xl  "></MdAddModerator>
+                  </button>
                 </td>
-                <td 
-                                  onClick={() => handleMakeAdmin(user)}
-
-                className="hover:bg-slate-400 hover:rounded-full ">
-                  <GrUserAdmin className="text-2xl   ml-4"></GrUserAdmin>
+                <td>
+                  <button
+                    disabled={loggedUser?.email === user?.email}
+                    onClick={() => handleMakeAdmin(user)}
+                    className="btn  hover:rounded-full text-center "
+                  >
+                    <GrUserAdmin className="text-2xl  "></GrUserAdmin>
+                  </button>
                 </td>
               </tr>
             ))}

@@ -42,7 +42,7 @@ const Profile = () => {
   
                 <div>
                   
-                  dfg
+                  
                 </div>
               </div>
             </div>

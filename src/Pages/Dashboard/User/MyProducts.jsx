@@ -121,7 +121,6 @@ const MyProducts = () => {
                             {product.votes}
                           </td>
 
-                          <td className=" py-4 text-sm text-gray-500  whitespace-nowrap">
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <div
                                 className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
@@ -157,7 +156,6 @@ const MyProducts = () => {
                                 </h2>
                               </div>
                             </td>{" "}
-                          </td>
                           <td className="px-4 py-4  text-gray-500 text-lg whitespace-nowrap">
                             <Link to={`/dashboard/updateProduct/${product._id}`}>
                             <button>
