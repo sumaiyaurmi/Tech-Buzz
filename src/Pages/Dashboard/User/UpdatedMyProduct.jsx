@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
 import { imageUpload } from '../../../Components/Utils';
+import { TbFidgetSpinner } from 'react-icons/tb';
 
 const UpdatedMyProduct = () => {
 
@@ -16,9 +17,13 @@ const UpdatedMyProduct = () => {
     const { user } = useContext(AuthContext);
     const axiosPublice = useAxiosPublic();
     const navigate = useNavigate();
+    const [loading,setLoading]=useState(false)
+
 
     const handleUpdateProduct = async (e) => {
         e.preventDefault();
+        setLoading(true)
+
         const form = e.target;
         const name = form.name.value;
         const description = form.description.value;
@@ -46,6 +51,8 @@ const UpdatedMyProduct = () => {
           };
           const { data } = await axiosPublice.put(`/products/${product._id}`,productData);
           console.log(data);
+          setLoading(false)
+
           toast("products Updated Successfully", {
             icon: "👏",
             style: {
@@ -56,6 +63,8 @@ const UpdatedMyProduct = () => {
           });
           navigate("/dashboard/myProducts");
         } catch (err) {
+            setLoading(false)
+
           console.log(err);
           toast.error(`${err.message}`);
         }
@@ -211,10 +220,15 @@ const UpdatedMyProduct = () => {
 
           <button
             type="submit"
+            disabled={loading}
+
             className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
           >
-            Update Product
-          </button>
+        {loading ? (
+            <TbFidgetSpinner className='m-auto animate-spin' size={24} />
+          ) : (
+            'Update Product'
+          )}          </button>
         </form>
       </div>
         </div>

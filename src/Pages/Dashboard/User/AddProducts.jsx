@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../UseHooks/UseAxiosPublic";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { imageUpload } from "../../../Components/Utils";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const AddProducts = () => {
   const [selected, setSelected] = useState(["AI"]);
@@ -14,9 +15,11 @@ const AddProducts = () => {
   const { user } = useContext(AuthContext);
   const axiosPublice = useAxiosPublic();
   const navigate = useNavigate();
+  const [loading,setLoading]=useState(false)
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const form = e.target;
     const name = form.name.value;
     const description = form.description.value;
@@ -44,6 +47,7 @@ const AddProducts = () => {
       };
       const { data } = await axiosPublice.post(`/products`, productData);
       console.log(data);
+      setLoading(false)
       toast("products Added Successfully", {
         icon: "👏",
         style: {
@@ -55,6 +59,8 @@ const AddProducts = () => {
       navigate("/dashboard/myProducts");
     } catch (err) {
       console.log(err);
+      setLoading(false)
+
       toast.error(`${err.message}`);
     }
   };
@@ -201,9 +207,15 @@ const AddProducts = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
           >
-            Add Product
+                     {loading ? (
+            <TbFidgetSpinner className='m-auto animate-spin' size={24} />
+          ) : (
+            'Add Product'
+          )}
+
           </button>
         </form>
       </div>

@@ -11,13 +11,17 @@ const MyProducts = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
 
-  const { refetch, data: products = [] } = useQuery({
-    queryKey: ["myProdutcs"],
+
+  const {  data: products = [],refetch,isPending } = useQuery({
+    queryKey: ["myProdutcs",user?.email],
     queryFn: async () => {
       const res = await axiosPublic.get(`/products/${user?.email}`);
+    
       return res.data;
     },
   });
+
+
 
   const handledelete = (id) => {
     Swal.fire({
@@ -35,7 +39,7 @@ const MyProducts = () => {
             refetch();
             Swal.fire({
               title: "Deleted!",
-              text: "Your file has been deleted.",
+              text: "Product has been deleted.",
               icon: "success",
             });
           }
@@ -43,6 +47,7 @@ const MyProducts = () => {
       }
     });
   };
+  if (isPending) return 'Loading...'
 
   return (
     <section className="container px-4 mx-auto pt-1 my-10  ">
@@ -76,7 +81,7 @@ const MyProducts = () => {
                           scope="col"
                           className="py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                         >
-                          <span>Timestamp</span>
+                          <span>Votes</span>
                         </th>
 
                         <th
