@@ -17,7 +17,7 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-const axiosPublic=useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -36,7 +36,7 @@ const axiosPublic=useAxiosPublic()
 
   const logOut = async () => {
     setLoading(true);
-   
+
     return signOut(auth);
   };
 
@@ -47,7 +47,8 @@ const axiosPublic=useAxiosPublic()
     });
   };
 
- 
+  
+
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -59,15 +60,12 @@ const axiosPublic=useAxiosPublic()
           if (res.data.token) {
             localStorage.setItem("access-token", res.data.token);
             setLoading(false);
-
           }
         });
-      } 
-      else {
+      } else {
         // remove token
-        localStorage.removeItem('access-token')
+        localStorage.removeItem("access-token");
         setLoading(false);
-
       }
       console.log("CurrentUser-->", currentUser);
     });

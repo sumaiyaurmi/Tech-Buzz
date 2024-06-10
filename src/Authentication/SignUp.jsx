@@ -1,21 +1,26 @@
-import  { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
-import axios from "axios";
 import { imageUpload } from "../Components/Utils";
+import useAxiosPublic from "../UseHooks/UseAxiosPublic";
+import Swal from "sweetalert2";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const SignUp = () => {
-  const { setUser, createUser, signInWithGoogle, updateUserProfile } =
+  const {  createUser, signInWithGoogle, updateUserProfile } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [passError, setPassError] = useState("");
   const [passSuccues, setPassSuccess] = useState("");
+  const axiosPublic = useAxiosPublic();
+  const [loading,setLoading]=useState(false)
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     const form = e.target;
     const name = form.name.value;
@@ -23,8 +28,6 @@ const SignUp = () => {
     const pass = form.password.value;
     const image = form.image.files[0];
     console.log(name, email, pass, image);
-
-    
 
     try {
       // clear previous message
@@ -40,28 +43,39 @@ const SignUp = () => {
         );
       }
 
-      const image_url= await imageUpload(image)
-
+      const image_url = await imageUpload(image);
 
       // User Registration
       const result = await createUser(email, pass);
       console.log(result.user);
 
       //   UserUpdate
-      await updateUserProfile(name, image_url);
-      // Optimistic Ui Update
-      setUser({ ...result?.user, photoURL:image_url, displayName: name });
-      navigate(from);
-      toast("User Created Successfully", {
-        icon: "👏",
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
+      await updateUserProfile(name, image_url)
+      .then(() => {
+        setLoading(false)
+
+        const userInfo = {
+          name: name,
+          email: email,
+          role: 'user',
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User Created Succesfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            
+            navigate(from);
+          }
+        });
       });
     } catch (err) {
       console.log(err.message);
+      setLoading(false)
       toast(err.message, {
         icon: "❌",
         style: {
@@ -79,15 +93,23 @@ const SignUp = () => {
       const result = await signInWithGoogle();
       console.log(result.user);
 
-      toast("User Created Successfully", {
-        icon: "👏",
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
+      const userInfo = {
+        name: result.user?.displayName,
+        email: result.user.email,
+        role: 'user',
+
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User Created Succesfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from);
       });
-      navigate(from);
     } catch (err) {
       console.log(err);
       toast(err.message, {
@@ -223,12 +245,20 @@ const SignUp = () => {
               {passError && <p className="text-red-700">{passError}</p>}
             </div>
             <div className="mt-6">
-              <button
-                type="submit"
-                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-              >
-                Sign Up
-              </button>
+             
+               <button
+            type="submit"
+            disabled={loading}
+            className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
+          >
+                     {loading ? (
+            <TbFidgetSpinner className='m-auto animate-spin' size={24} />
+          ) : (
+            'Sign up'
+          )}
+
+          </button>
+              
             </div>
           </form>
 

@@ -3,17 +3,17 @@ import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
-import useAxiosPublic from "../../../UseHooks/UseAxiosPublic";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { imageUpload } from "../../../Components/Utils";
 import { TbFidgetSpinner } from "react-icons/tb";
+import useAxiosSecure from "../../../UseHooks/useAxiosSecure";
 
 const AddProducts = () => {
   const [selected, setSelected] = useState(["AI"]);
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
-  const axiosPublice = useAxiosPublic();
+  const axiosSecure=useAxiosSecure()
   const navigate = useNavigate();
   const [loading,setLoading]=useState(false)
 
@@ -45,7 +45,7 @@ const AddProducts = () => {
           image: user?.photURL,
         },
       };
-      const { data } = await axiosPublice.post(`/products`, productData);
+      const { data } = await axiosSecure.post(`/products`, productData);
       console.log(data);
       setLoading(false)
       toast("products Added Successfully", {

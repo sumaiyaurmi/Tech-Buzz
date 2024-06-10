@@ -1,42 +1,45 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../UseHooks/UseAxiosPublic";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
   const { signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+const axiosPublic=useAxiosPublic()
+const [loading,setLoading]=useState(false)
+
 
   // handle email register
   const handlelogin = async (e) => {
     e.preventDefault();
-
+setLoading(true)
     const form = e.target;
     const email = form.email.value;
     const pass = form.password.value;
 
     try {
       const result = await signIn(email, pass);
-      console.log(result.user);
+      console.log(result.user)
+      setLoading(false)
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "User Created Succesfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       navigate(from);
-      toast('User Log In Successfully',
-        {
-          icon: '✔️',
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
-        }
-      );
-       
 
     }
      catch (err) {
       console.log(err.message);
+      setLoading(false)
       toast(err.message, {
         icon: '❌',
         style: {
@@ -52,18 +55,23 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithGoogle();
-      console.log(result);
-      navigate(from);
-      toast('User Log In Successfully',
-        {
-          icon: '✔️',
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
-        }
-      );
+      const userInfo = {
+        name: result.user?.displayName,
+        email: result.user.email,
+        role: 'user',
+      };
+      axiosPublic.post("/users", userInfo)
+      .then((res)=>{
+        console.log(res.data)
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User Created Succesfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from);
+      })
     } catch (err) {
       console.log(err);
       toast(err.message, {
@@ -174,11 +182,18 @@ const Login = () => {
               </div>
 
               <div className="mt-6">
-                <input
-                  type="submit"
-                  className="w-full btn bg-black text-white py-2  rounded-lg hover:text-yellow-600 hover:bg-black"
-                  value="Login"
-                />
+              <button
+            type="submit"
+            disabled={loading}
+            className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
+          >
+                     {loading ? (
+            <TbFidgetSpinner className='m-auto animate-spin' size={24} />
+          ) : (
+            'Login'
+          )}
+
+          </button>
               </div>
             </form>
 

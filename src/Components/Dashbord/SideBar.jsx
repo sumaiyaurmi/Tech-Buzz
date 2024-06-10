@@ -1,17 +1,20 @@
 import { GrLogout } from "react-icons/gr";
-import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
-import { BsGraphUp } from "react-icons/bs";
 import { useContext, useState } from "react";
 import MenuItem from "./MenuItems";
-import { FaAd, FaHome, FaPlus, FaProductHunt } from "react-icons/fa";
+import {  FaHome, FaPlus, FaProductHunt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
+import useRole from "../../UseHooks/useRole";
+import UserMenu from "./SideBarMenu/UserMenu";
+import ModaretorMenu from "./SideBarMenu/ModaretorMenu";
+import ADminMEnu from "./SideBarMenu/ADminMEnu";
 
 const SideBar = () => {
-  const [toggle, setToggle] = useState(false);
   const [isActive, setActive] = useState(false);
   const { user, logOut } = useContext(AuthContext);
+const[role,isLoading]=useRole()
+console.log(role,isLoading)
 
   const handleLogOut = async () => {
     await logOut();
@@ -38,10 +41,7 @@ const SideBar = () => {
   };
 
 
-  //   For guest/host menu item toggle button
-  const toggleHandler = (event) => {
-    setToggle(event.target.checked);
-  };
+  
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive);
@@ -110,13 +110,10 @@ const SideBar = () => {
 
           {/* Nav Items */}
           <nav>
-            <MenuItem icon={FaHome} label=" My Profile" address="profile" />
-            <MenuItem
-              icon={FaPlus}
-              label="  Add Product"
-              address="/dashboard/addProduct"
-            />
-            <MenuItem icon={FaProductHunt} label=" My Products" address="/dashboard/myProducts" />
+            {role === 'user' && <UserMenu></UserMenu> }
+            {role === 'moderator' && <ModaretorMenu></ModaretorMenu> }
+            {role === 'admin' && <ADminMEnu></ADminMEnu> }
+            
           </nav>
         </div>
 

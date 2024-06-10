@@ -1,21 +1,21 @@
 import { useContext } from "react";
-import useAxiosPublic from "../../../UseHooks/UseAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 import { PiEmptyBold } from "react-icons/pi";
 import Swal from "sweetalert2";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../../UseHooks/useAxiosSecure";
 
 const MyProducts = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
 
 
   const {  data: products = [],refetch,isPending } = useQuery({
     queryKey: ["myProdutcs",user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/products/${user?.email}`);
+      const res = await axiosSecure.get(`/products/${user?.email}`);
     
       return res.data;
     },
@@ -34,7 +34,7 @@ const MyProducts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/products/${id}`).then((res) => {
+        axiosSecure.delete(`/products/${id}`).then((res) => {
           if (res.data.deletedCount) {
             refetch();
             Swal.fire({
@@ -47,7 +47,13 @@ const MyProducts = () => {
       }
     });
   };
-  if (isPending) return 'Loading...'
+  if (isPending)
+    return (
+      <div className="text-center">
+        {" "}
+        <span className="loading loading-bars text-center mt-44 loading-lg"></span>
+      </div>
+    );
 
   return (
     <section className="container px-4 mx-auto pt-1 my-10  ">

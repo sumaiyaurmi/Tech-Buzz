@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
 import { imageUpload } from '../../../Components/Utils';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import useAxiosSecure from '../../../UseHooks/useAxiosSecure';
 
 const UpdatedMyProduct = () => {
 
@@ -15,7 +16,7 @@ const UpdatedMyProduct = () => {
     const [selected, setSelected] = useState(["AI"]);
     const [startDate, setStartDate] = useState(new Date(product.timestamp));
     const { user } = useContext(AuthContext);
-    const axiosPublice = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const [loading,setLoading]=useState(false)
 
@@ -49,7 +50,7 @@ const UpdatedMyProduct = () => {
               image: user?.photURL,
             },
           };
-          const { data } = await axiosPublice.put(`/products/${product._id}`,productData);
+          const { data } = await axiosSecure.put(`/products/${product._id}`,productData);
           console.log(data);
           setLoading(false)
 

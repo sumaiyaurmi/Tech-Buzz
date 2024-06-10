@@ -10,6 +10,7 @@ import MyProducts from "../Pages/Dashboard/User/MyProducts";
 import Profile from "../Pages/Dashboard/Common/Profile";
 import PrivateRoute from "../Providers/PrivateRoute/PrivateRoutes";
 import UpdatedMyProduct from "../Pages/Dashboard/User/UpdatedMyProduct";
+import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
     fetch(
       `http://localhost:5000/productss/${params.id}`
     ),
+},
+{
+  path:'admin-manage-users',
+  element:<ManageUser></ManageUser>,
+  
 },
     ])
   },
