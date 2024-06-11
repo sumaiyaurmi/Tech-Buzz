@@ -36,6 +36,8 @@ const AddProducts = () => {
         image: image_url,
         links,
         timestamp,
+        isFeatured:false,
+        reported:false,
         votes: 0,
         status: "pending",
         tags: selected,
