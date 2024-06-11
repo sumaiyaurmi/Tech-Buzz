@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../UseHooks/useAxiosSecure";
 import { TbListDetails } from "react-icons/tb";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const ProductReview = () => {
   const axiosSecure = useAxiosSecure();
@@ -39,8 +40,18 @@ const ProductReview = () => {
         }
       });
   };
-  // status
-  const handleFeatured = async (product,isFeatured) => {
+  // Featured
+  const handleFeatured = async (product, isFeatured) => {
+    if (product.isFeatured) {
+      return toast(`${product.name} is already added in featured collection`, {
+        icon: "❌",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
 
     await axiosSecure
       .patch(`/productsFeatured/${product._id}`, { isFeatured })
@@ -50,15 +61,13 @@ const ProductReview = () => {
           Swal.fire({
             position: "top-center",
             icon: "success",
-            title: `${product.name} is Now Featured`,
+            title: `${product.name} is now added in featured`,
             showConfirmButton: false,
             timer: 1500,
           });
         }
       });
   };
-
-  
 
   if (isLoading)
     return (
@@ -126,7 +135,7 @@ const ProductReview = () => {
                 </td>
                 <td className="">
                   <button
-                    onClick={() => handleFeatured(product,true)}
+                    onClick={() => handleFeatured(product, true)}
                     className="bg-yellow-500 px-4 py-2 text-lg btn text-center font-semibold  rounded-xl"
                   >
                     <MdOutlineFeaturedPlayList></MdOutlineFeaturedPlayList>

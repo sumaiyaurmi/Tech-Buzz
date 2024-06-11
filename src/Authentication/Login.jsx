@@ -30,7 +30,7 @@ setLoading(true)
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "User Created Succesfully",
+        title: "User Loged In Succesfully",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -66,7 +66,7 @@ setLoading(true)
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "User Created Succesfully",
+          title: "User Loged In Succesfully",
           showConfirmButton: false,
           timer: 1500,
         });

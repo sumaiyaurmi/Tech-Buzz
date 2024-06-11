@@ -1,19 +1,19 @@
 import  { useContext, useState } from 'react';
 import { MdWhereToVote } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
-import useAxiosPublic from '../../UseHooks/UseAxiosPublic';
+import useAxiosSecure from '../../UseHooks/useAxiosSecure';
 const ProductCard = ({product,refetch}) => {
     const {_id,image,name,tags,votes,Owner}=product
     const {user}=useContext(AuthContext)
     const[vote,setVote]=useState(votes)
     const [isVoted,setIsVoted]=useState(false)
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
 
     const handleUpVote = async () => {
         if(user){
-     const {data}=await axiosPublic.post(`/products/${_id}/vote`)
+     const {data}=await axiosSecure.post(`/products/${_id}/vote`)
      setVote(data.votes)
      setIsVoted(true)
      refetch()
@@ -34,8 +34,10 @@ const ProductCard = ({product,refetch}) => {
               />
             </figure>
             <div className="card-body ">
-              <h2 className="card-title">{name}</h2>
-              <div className="flex gap-3 my-2">
+<Link to={`/ProductDetails/${_id}`}>
+<h2 className="card-title">{name}</h2>
+
+</Link>              <div className="flex gap-3 my-2">
                 {tags.map((tag, index) => (
                   <div
                     key={index}

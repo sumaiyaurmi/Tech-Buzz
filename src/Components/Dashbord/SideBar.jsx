@@ -14,7 +14,7 @@ const SideBar = () => {
   const [isActive, setActive] = useState(false);
   const { user, logOut } = useContext(AuthContext);
 const[role,isLoading]=useRole()
-console.log(role,isLoading)
+// console.log(role,isLoading)
 
   const handleLogOut = async () => {
     await logOut();

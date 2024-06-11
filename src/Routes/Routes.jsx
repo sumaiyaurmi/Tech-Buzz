@@ -12,6 +12,8 @@ import PrivateRoute from "../Providers/PrivateRoute/PrivateRoutes";
 import UpdatedMyProduct from "../Pages/Dashboard/User/UpdatedMyProduct";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import ProductReview from "../Pages/Dashboard/Moderator/ProductReview";
+import AllProducts from "../Pages/Home/AllProducts/AllProducts";
+import ProdcutsDetails from "../Components/Home/ProdcutsDetails";
 
 const router = createBrowserRouter([
   {
@@ -21,54 +23,64 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element:<Home></Home>
+        element: <Home></Home>,
       },
       {
         path: "/login",
-        element:<Login></Login>
+        element: <Login></Login>,
       },
       {
         path: "/signUp",
-        element:<SignUp></SignUp>
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: "/all-Products",
+        element: <AllProducts></AllProducts>,
+      },
+      {
+        path: "ProductDetails/:id",
+        element: <ProdcutsDetails></ProdcutsDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/productss/${params.id}`),
       },
     ],
   },
   {
-    path:'/dashboard',
-    element:<PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
-    errorElement: <Error></Error>,
-    children:([
-{
-  path:'profile',
-  element:<Profile></Profile>
-},
-{
-  path:'addProduct',
-  element:<AddProducts></AddProducts>
-},
-{
-  path:'myProducts',
-  element:<MyProducts></MyProducts>
-},
-{
-  path:'updateProduct/:id',
-  element:<UpdatedMyProduct></UpdatedMyProduct>,
-  loader: ({ params }) =>
-    fetch(
-      `http://localhost:5000/productss/${params.id}`
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashBoard></DashBoard>
+      </PrivateRoute>
     ),
-},
-{
-  path:'modaretor-review',
-  element:<ProductReview></ProductReview>,
-  
-},
-{
-  path:'admin-manage-users',
-  element:<ManageUser></ManageUser>,
-  
-},
-    ])
+    errorElement: <Error></Error>,
+    children: [
+      {
+        path: "profile",
+        element: <Profile></Profile>,
+      },
+      {
+        path: "addProduct",
+        element: <AddProducts></AddProducts>,
+      },
+      {
+        path: "myProducts",
+        element: <MyProducts></MyProducts>,
+      },
+      {
+        path: "updateProduct/:id",
+        element: <UpdatedMyProduct></UpdatedMyProduct>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/productss/${params.id}`),
+      },
+      {
+        path: "modaretor-review",
+        element: <ProductReview></ProductReview>,
+      },
+      {
+        path: "admin-manage-users",
+        element: <ManageUser></ManageUser>,
+      },
+    ],
   },
 ]);
 
