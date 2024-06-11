@@ -18,6 +18,7 @@ import Reportproducts from "../Pages/Dashboard/Moderator/Reportproducts";
 import ManageState from "../Pages/Dashboard/Admin/ManageState";
 import ManageCoupons from "../Pages/Dashboard/Admin/ManageCoupons";
 import UpdateCoupon from "../Pages/Dashboard/Admin/UpdateCoupon";
+import Payment from "../Pages/Dashboard/Common/Payment";
 
 const router = createBrowserRouter([
   {
@@ -102,7 +103,10 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/coupons/${params.id}`),
       },
-      
+      {
+        path: "payment",
+        element:<Payment></Payment>,
+      },
     ],
   },
 ]);

@@ -26,7 +26,6 @@ const ManageCoupons = () => {
       return res.data;
     },
   });
-  console.log(coupons);
 
   const handleCoupon = async (e) => {
     e.preventDefault();
@@ -93,7 +92,6 @@ const ManageCoupons = () => {
   if (isPending)
     return (
       <div className="text-center">
-        {" "}
         <span className="loading loading-bars text-center mt-44 loading-lg"></span>
       </div>
     );
@@ -117,7 +115,7 @@ const ManageCoupons = () => {
             <thead className="my-4">
               <tr>
                 <th></th>
-                <th>Coupon Code</th>
+                <th>CouponCode</th>
                 <th>Description</th>
                 <th>Amount</th>
                 <th>Expiry Date</th>
@@ -131,7 +129,7 @@ const ManageCoupons = () => {
                   <th>{index + 1}</th>
                   <td>{coupon.coupon_code}</td>
                   <td>{coupon.description}</td>
-                  <td>{coupon.amount}</td>
+                  <td>{"$"+ coupon.amount}</td>
                   <td> {new Date(coupon.expiryDate).toLocaleDateString()}</td>
                   <td>
                     <Link to={`/dashboard/updateCoupon/${coupon._id}`}>
