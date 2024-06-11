@@ -5,6 +5,7 @@ import { TbListDetails } from "react-icons/tb";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ProductReview = () => {
   const axiosSecure = useAxiosSecure();
@@ -79,7 +80,7 @@ const ProductReview = () => {
 
   return (
     <div>
-      <h3 className="text-4xl my-10  ">Total Users:{products.length}</h3>
+      <h3 className="text-4xl my-10  ">Total Products:{products.length}</h3>
       <div className="overflow-x-auto ">
         <table className="table  space-y-4  ">
           {/* head */}
@@ -129,9 +130,9 @@ const ProductReview = () => {
                   </div>
                 </td>{" "}
                 <td>
-                  <button className="bg-slate-400  px-4 py-2 text-lg btn text-center font-semibold  rounded-xl">
+                  <Link  to={`/ProductDetails/${product._id}`} ><button className="bg-slate-400  px-4 py-2 text-lg btn text-center font-semibold  rounded-xl">
                     <TbListDetails></TbListDetails>
-                  </button>
+                  </button></Link>
                 </td>
                 <td className="">
                   <button

@@ -24,6 +24,7 @@
     "react-simple-typewriter": "^5.0.1",
     "react-tag-input": "^6.10.2",
     "react-tag-input-component": "^2.0.2",
+    "recharts": "^2.12.7",
     "sweetalert2": "^11.11.1",
     "swiper": "^11.1.4"
   },

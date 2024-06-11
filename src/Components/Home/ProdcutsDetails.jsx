@@ -54,6 +54,7 @@ const ProdcutsDetails = () => {
       const { data } = await axiosSecure.post(`/products/${_id}/vote`);
       setVote(data.votes);
       setIsVoted(true);
+      refetch()
       toast.success("voted successfully");
     } else {
       return navigate("/login");
@@ -85,6 +86,7 @@ const ProdcutsDetails = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          refetch()
         }
       });
   };

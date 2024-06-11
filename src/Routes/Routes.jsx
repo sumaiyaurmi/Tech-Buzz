@@ -14,6 +14,8 @@ import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import ProductReview from "../Pages/Dashboard/Moderator/ProductReview";
 import AllProducts from "../Pages/Home/AllProducts/AllProducts";
 import ProdcutsDetails from "../Components/Home/ProdcutsDetails";
+import Reportproducts from "../Pages/Dashboard/Moderator/Reportproducts";
+import ManageState from "../Pages/Dashboard/Admin/ManageState";
 
 const router = createBrowserRouter([
   {
@@ -77,8 +79,16 @@ const router = createBrowserRouter([
         element: <ProductReview></ProductReview>,
       },
       {
+        path: "modaretor-reported-contents",
+        element: <Reportproducts></Reportproducts>,
+      },
+      {
         path: "admin-manage-users",
         element: <ManageUser></ManageUser>,
+      },
+      {
+        path: "admin-statistics",
+        element: <ManageState></ManageState>,
       },
     ],
   },
