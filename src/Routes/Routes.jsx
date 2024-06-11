@@ -16,6 +16,8 @@ import AllProducts from "../Pages/Home/AllProducts/AllProducts";
 import ProdcutsDetails from "../Components/Home/ProdcutsDetails";
 import Reportproducts from "../Pages/Dashboard/Moderator/Reportproducts";
 import ManageState from "../Pages/Dashboard/Admin/ManageState";
+import ManageCoupons from "../Pages/Dashboard/Admin/ManageCoupons";
+import UpdateCoupon from "../Pages/Dashboard/Admin/UpdateCoupon";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +92,17 @@ const router = createBrowserRouter([
         path: "admin-statistics",
         element: <ManageState></ManageState>,
       },
+      {
+        path: "admin-manage-coupons",
+        element: <ManageCoupons></ManageCoupons>,
+      },
+      {
+        path: "updateCoupon/:id",
+        element: <UpdateCoupon></UpdateCoupon>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/productss/${params.id}`),
+      },
+      
     ],
   },
 ]);
