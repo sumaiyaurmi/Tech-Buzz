@@ -11,17 +11,18 @@ const MyProducts = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
 
-
-  const {  data: products = [],refetch,isPending } = useQuery({
-    queryKey: ["myProdutcs",user?.email],
+  const {
+    data: products = [],
+    refetch,
+    isPending,
+  } = useQuery({
+    queryKey: ["myProdutcs", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/products/${user?.email}`);
-    
+
       return res.data;
     },
   });
-
-
 
   const handledelete = (id) => {
     Swal.fire({
@@ -116,17 +117,15 @@ const MyProducts = () => {
                           <td className=" py-4 px-2 text-sm text-gray-500  whitespace-nowrap">
                             {product.name}
                           </td>
-
                           <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                             {product.votes}
                           </td>
-
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <div
-                                className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
-                                  product.status === "pending" &&
-                                  "bg-yellow-100/60 text-yellow-500"
-                                }
+                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div
+                              className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
+                                product.status === "pending" &&
+                                "bg-yellow-100/60 text-yellow-500"
+                              }
                                  ${
                                    product.status === "accepted" &&
                                    "bg-emerald-100/60 text-emerald-500"
@@ -136,37 +135,39 @@ const MyProducts = () => {
                                    "bg-emerald-100/60 text-red-500"
                                  } 
                                 `}
-                              >
-                                <span
-                                  className={`h-1.5 w-1.5 rounded-full ${
-                                    product.status === "pending" &&
-                                    "bg-yellow-500"
-                                  }  ${
-                                    product.status === "accepted" &&
-                                    "bg-green-500"
-                                  }  
+                            >
+                              <span
+                                className={`h-1.5 w-1.5 rounded-full ${
+                                  product.status === "pending" &&
+                                  "bg-yellow-500"
+                                }  ${
+                                  product.status === "accepted" &&
+                                  "bg-green-500"
+                                }  
                                   ${
                                     product.status === "rejected" &&
                                     "bg-red-500"
                                   }  
                                   `}
-                                ></span>
-                                <h2 className="text-sm font-normal ">
-                                  {product.status}
-                                </h2>
-                              </div>
-                            </td>{" "}
+                              ></span>
+                              <h2 className="text-sm font-normal ">
+                                {product.status}
+                              </h2>
+                            </div>
+                          </td>{" "}
                           <td className="px-4 py-4  text-gray-500 text-lg whitespace-nowrap">
-                            <Link to={`/dashboard/updateProduct/${product._id}`}>
-                            <button>
-                              <FaEdit></FaEdit>
-                            </button>
+                            <Link
+                              to={`/dashboard/updateProduct/${product._id}`}
+                            >
+                              <button>
+                                <FaEdit></FaEdit>
+                              </button>
                             </Link>
                           </td>
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
                               <button
-onClick={()=>handledelete(product._id)}
+                                onClick={() => handledelete(product._id)}
                                 className="px-3 py-1 rounded-full text-red-500  bg-blue-100/60"
                               >
                                 <FaTrash></FaTrash>

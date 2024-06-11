@@ -13,13 +13,13 @@ const AddProducts = () => {
   const [selected, setSelected] = useState(["AI"]);
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
-  const axiosSecure=useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     const form = e.target;
     const name = form.name.value;
     const description = form.description.value;
@@ -36,8 +36,8 @@ const AddProducts = () => {
         image: image_url,
         links,
         timestamp,
-        isFeatured:false,
-        reported:false,
+        isFeatured: false,
+        reported: false,
         votes: 0,
         status: "pending",
         tags: selected,
@@ -49,7 +49,7 @@ const AddProducts = () => {
       };
       const { data } = await axiosSecure.post(`/products`, productData);
       console.log(data);
-      setLoading(false)
+      setLoading(false);
       toast("products Added Successfully", {
         icon: "👏",
         style: {
@@ -61,7 +61,7 @@ const AddProducts = () => {
       navigate("/dashboard/myProducts");
     } catch (err) {
       console.log(err);
-      setLoading(false)
+      setLoading(false);
 
       toast.error(`${err.message}`);
     }
@@ -212,12 +212,11 @@ const AddProducts = () => {
             disabled={loading}
             className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
           >
-                     {loading ? (
-            <TbFidgetSpinner className='m-auto animate-spin' size={24} />
-          ) : (
-            'Add Product'
-          )}
-
+            {loading ? (
+              <TbFidgetSpinner className="m-auto animate-spin" size={24} />
+            ) : (
+              "Add Product"
+            )}
           </button>
         </form>
       </div>

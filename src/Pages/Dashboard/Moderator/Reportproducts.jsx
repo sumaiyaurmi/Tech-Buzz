@@ -53,7 +53,9 @@ const Reportproducts = () => {
     );
   return (
     <div>
-      <h3 className="text-4xl my-10 text-red-500 ">Reported Products: {products.length}</h3>
+      <h3 className="text-4xl my-10 text-red-500 ">
+        Reported Products: {products.length}
+      </h3>
       <div className="overflow-x-auto ">
         <table className="table  space-y-4  ">
           {/* head */}

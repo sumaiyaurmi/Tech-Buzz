@@ -14,7 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import {  Navigation } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 
@@ -40,7 +40,11 @@ const ProdcutsDetails = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  const { data: reviewss = [],refetch, isPending } = useQuery({
+  const {
+    data: reviewss = [],
+    refetch,
+    isPending,
+  } = useQuery({
     queryKey: ["reviews", _id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/allReviews/${_id}`);
@@ -54,7 +58,7 @@ const ProdcutsDetails = () => {
       const { data } = await axiosSecure.post(`/products/${_id}/vote`);
       setVote(data.votes);
       setIsVoted(true);
-      refetch()
+      refetch();
       toast.success("voted successfully");
     } else {
       return navigate("/login");
@@ -86,7 +90,7 @@ const ProdcutsDetails = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          refetch()
+          refetch();
         }
       });
   };
@@ -117,7 +121,7 @@ const ProdcutsDetails = () => {
           color: "#fff",
         },
       });
-      refetch()
+      refetch();
       form.reset("");
       setRating(null);
     } catch (err) {
@@ -199,7 +203,7 @@ const ProdcutsDetails = () => {
                   type: "fraction",
                 }}
                 navigation={true}
-                modules={[ Navigation]}
+                modules={[Navigation]}
                 className="mySwiper"
               >
                 {reviewss.map((review) => (
@@ -218,7 +222,9 @@ const ProdcutsDetails = () => {
             </>
           ) : (
             <>
-            <h3 className="text-2xl text-red-500 font-semibold  my-2 ">No reviews yet. Give a review first</h3>
+              <h3 className="text-2xl text-red-500 font-semibold  my-2 ">
+                No reviews yet. Give a review first
+              </h3>
             </>
           )}
         </div>

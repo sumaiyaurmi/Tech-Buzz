@@ -100,7 +100,7 @@ const router = createBrowserRouter([
         path: "updateCoupon/:id",
         element: <UpdateCoupon></UpdateCoupon>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/productss/${params.id}`),
+          fetch(`http://localhost:5000/coupons/${params.id}`),
       },
       
     ],

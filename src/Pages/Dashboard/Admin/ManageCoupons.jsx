@@ -3,10 +3,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../UseHooks/useAxiosSecure";
-import { TbFidgetSpinner, TbListDetails } from "react-icons/tb";
+import { TbFidgetSpinner } from "react-icons/tb";
 import { useQuery } from "@tanstack/react-query";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ManageCoupons = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -64,6 +65,39 @@ const ManageCoupons = () => {
     }
   };
 
+  const handledelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/coupon/${id}`)
+        .then((res) => {
+          if (res.data.deletedCount) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Coupone has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
+  if (isPending)
+    return (
+      <div className="text-center">
+        {" "}
+        <span className="loading loading-bars text-center mt-44 loading-lg"></span>
+      </div>
+    );
+
   if (isPending)
     return (
       <div className="text-center">
@@ -100,14 +134,16 @@ const ManageCoupons = () => {
                   <td>{coupon.amount}</td>
                   <td> {new Date(coupon.expiryDate).toLocaleDateString()}</td>
                   <td>
-                    <Link to={`/updateCoupon/${coupon._id}`}>
-                      <button className="btn text-lg"><FaEdit></FaEdit></button>
+                    <Link to={`/dashboard/updateCoupon/${coupon._id}`}>
+                      <button className="btn text-lg">
+                        <FaEdit></FaEdit>
+                      </button>
                     </Link>
                   </td>
 
                   <td className="">
                     <button
-                      // onClick={() => handledelete(product._id)}
+                      onClick={() => handledelete(coupon._id)}
                       className=" btn text-red-500 text-lg btn text-center font-semibold  rounded-xl"
                     >
                       <FaTrash></FaTrash>
