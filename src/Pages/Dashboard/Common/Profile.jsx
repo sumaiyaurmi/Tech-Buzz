@@ -1,10 +1,30 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../UseHooks/useAxiosSecure";
+import useRole from "../../../UseHooks/useRole";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const [role] = useRole();
 
+  const { data: payment, isPending } = useQuery({
+    queryKey: ["reviews", user?.dataemail],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/payment/${user?.email}`);
+
+      return res.data;
+    },
+  });
+  if (isPending)
+    return (
+      <div className="text-center">
+        {" "}
+        <span className="loading loading-bars text-center mt-44 loading-lg"></span>
+      </div>
+    );
   return (
     <div className="flex justify-center items-center mt-16">
       <div className="bg-white shadow-lg rounded-2xl ">
@@ -22,9 +42,19 @@ const Profile = () => {
             />
           </a>
 
-          <p className="p-2 mt-2 px-4 text-xs text-white bg-yellow-500 rounded-full">
-            User
-          </p>
+          <div className="flex gap-2">
+            <p className="p-2 mt-2 px-4 text-xs text-white bg-yellow-500 rounded-full">
+              {role === "user" && "User"}
+              {role === "moderator" && "Moderator"}
+              {role === "admin" && "Admin"}{" "}
+            </p>
+
+            {payment && (
+              <p className="p-2 mt-2 px-4 text-xs text-white bg-green-500 rounded-full">
+                {payment.status}
+              </p>
+            )}
+          </div>
 
           <div className="w-full p-2 mt-4 rounded-lg">
             <div className="flex flex-col md:flex-row text-left gap-3 md:gap-10 md:items-center justify-between text-sm text-gray-600 ">
@@ -40,18 +70,24 @@ const Profile = () => {
               </p>
             </div>
             <div>
-              <div className="text-center mt-2 flex items-center gap-4">
-                <p className="text-left font-semibold text-red-400">
-                  {" "}
-                  Membership Subscribe :
-                </p>
-                <Link to={'/dashboard/payment'}>
-                  {" "}
-                  <button className="btn font-semibold text-lg my-2 bg-black text-yellow-600 ">
-                   Pay $90
-                  </button>
-                </Link>{" "}
-              </div>
+              {payment ? (
+                <></>
+              ) : (
+                <>
+                  <div className="text-center mt-2 flex items-center gap-4">
+                    <p className="text-left font-semibold text-red-400">
+                      {" "}
+                      Membership Subscribe :
+                    </p>
+                    <Link to={"/dashboard/payment"}>
+                      {" "}
+                      <button className="btn font-semibold text-lg my-2 bg-black text-yellow-600 ">
+                        Pay $90
+                      </button>
+                    </Link>{" "}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

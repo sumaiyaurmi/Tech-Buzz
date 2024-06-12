@@ -44,7 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: "ProductDetails/:id",
-        element: <ProdcutsDetails></ProdcutsDetails>,
+        element: (
+          <PrivateRoute>
+            <ProdcutsDetails></ProdcutsDetails>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/productss/${params.id}`),
       },
@@ -61,51 +65,95 @@ const router = createBrowserRouter([
     children: [
       {
         path: "profile",
-        element: <Profile></Profile>,
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "addProduct",
-        element: <AddProducts></AddProducts>,
+        element: (
+          <PrivateRoute>
+            <AddProducts></AddProducts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "myProducts",
-        element: <MyProducts></MyProducts>,
+        element: (
+          <PrivateRoute>
+            <MyProducts></MyProducts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "updateProduct/:id",
-        element: <UpdatedMyProduct></UpdatedMyProduct>,
+        element: (
+          <PrivateRoute>
+            <UpdatedMyProduct></UpdatedMyProduct>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/productss/${params.id}`),
       },
       {
         path: "modaretor-review",
-        element: <ProductReview></ProductReview>,
+        element: (
+          <PrivateRoute>
+            <ProductReview></ProductReview>
+          </PrivateRoute>
+        ),
       },
       {
         path: "modaretor-reported-contents",
-        element: <Reportproducts></Reportproducts>,
+        element: (
+          <PrivateRoute>
+            <Reportproducts></Reportproducts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "admin-manage-users",
-        element: <ManageUser></ManageUser>,
+        element: (
+          <PrivateRoute>
+            <ManageUser></ManageUser>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "admin-statistics",
-        element: <ManageState></ManageState>,
+        element: (
+          <PrivateRoute>
+            <ManageState></ManageState>
+          </PrivateRoute>
+        ),
       },
       {
         path: "admin-manage-coupons",
-        element: <ManageCoupons></ManageCoupons>,
+        element: (
+          <PrivateRoute>
+            <ManageCoupons></ManageCoupons>
+          </PrivateRoute>
+        ),
       },
       {
         path: "updateCoupon/:id",
-        element: <UpdateCoupon></UpdateCoupon>,
+        element: (
+          <PrivateRoute>
+            <UpdateCoupon></UpdateCoupon>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/coupons/${params.id}`),
       },
       {
         path: "payment",
-        element:<Payment></Payment>,
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
       },
     ],
   },

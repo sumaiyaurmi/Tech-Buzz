@@ -33,7 +33,7 @@ const ManageCoupons = () => {
     const form = e.target;
     const coupon_code = form.code.value;
     const description = form.description.value;
-    const amount = form.amount.value;
+    const amount = parseFloat(form.amount.value);
     const expiryDate = startDate;
 
     try {
