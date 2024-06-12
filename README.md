@@ -7,7 +7,7 @@
 
 ## Learners Live link
 
-[ Site live Link](https://paradiseretreat-41eda.web.app/)()
+[ Site live Link](https://techbuzz-e2076.web.app/)(https://techbuzz-e2076.web.app/)
 
 
 ## Features of Tech Buzz

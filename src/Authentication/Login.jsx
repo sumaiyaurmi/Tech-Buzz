@@ -25,7 +25,7 @@ setLoading(true)
 
     try {
       const result = await signIn(email, pass);
-      console.log(result.user)
+      // console.log(result.user)
       setLoading(false)
       Swal.fire({
         position: "top-end",
@@ -62,7 +62,7 @@ setLoading(true)
       };
       axiosPublic.post("/users", userInfo)
       .then((res)=>{
-        console.log(res.data)
+        // console.log(res.data)
         Swal.fire({
           position: "top-end",
           icon: "success",

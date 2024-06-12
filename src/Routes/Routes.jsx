@@ -50,7 +50,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/productss/${params.id}`),
+          fetch(
+            `https://assignment-12-server-zeta-swart.vercel.app/productss/${params.id}`
+          ),
       },
     ],
   },
@@ -95,7 +97,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/productss/${params.id}`),
+          fetch(
+            `https://assignment-12-server-zeta-swart.vercel.app/productss/${params.id}`
+          ),
       },
       {
         path: "modaretor-review",
@@ -145,7 +149,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/coupons/${params.id}`),
+          fetch(
+            `https://assignment-12-server-zeta-swart.vercel.app/coupons/${params.id}`
+          ),
       },
       {
         path: "payment",

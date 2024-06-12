@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { TbFidgetSpinner } from "react-icons/tb";
 
 const SignUp = () => {
-  const {  createUser, signInWithGoogle, updateUserProfile } =
+  const { createUser, signInWithGoogle, updateUserProfile } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,18 +16,18 @@ const SignUp = () => {
   const [passError, setPassError] = useState("");
   const [passSuccues, setPassSuccess] = useState("");
   const axiosPublic = useAxiosPublic();
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const pass = form.password.value;
     const image = form.image.files[0];
-    console.log(name, email, pass, image);
+    // console.log(name, email, pass, image);
 
     try {
       // clear previous message
@@ -50,14 +50,13 @@ const SignUp = () => {
       console.log(result.user);
 
       //   UserUpdate
-      await updateUserProfile(name, image_url)
-      .then(() => {
-        setLoading(false)
+      await updateUserProfile(name, image_url).then(() => {
+        setLoading(false);
 
         const userInfo = {
           name: name,
           email: email,
-          role: 'user',
+          role: "user",
         };
         axiosPublic.post("/users", userInfo).then((res) => {
           if (res.data.insertedId) {
@@ -68,14 +67,14 @@ const SignUp = () => {
               showConfirmButton: false,
               timer: 1500,
             });
-            
+
             navigate(from);
           }
         });
       });
     } catch (err) {
       console.log(err.message);
-      setLoading(false)
+      setLoading(false);
       toast(err.message, {
         icon: "❌",
         style: {
@@ -96,8 +95,7 @@ const SignUp = () => {
       const userInfo = {
         name: result.user?.displayName,
         email: result.user.email,
-        role: 'user',
-
+        role: "user",
       };
       axiosPublic.post("/users", userInfo).then((res) => {
         console.log(res.data);
@@ -245,20 +243,17 @@ const SignUp = () => {
               {passError && <p className="text-red-700">{passError}</p>}
             </div>
             <div className="mt-6">
-             
-               <button
-            type="submit"
-            disabled={loading}
-            className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
-          >
-                     {loading ? (
-            <TbFidgetSpinner className='m-auto animate-spin' size={24} />
-          ) : (
-            'Sign up'
-          )}
-
-          </button>
-              
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full p-3 mt-5 text-center hover:border-yellow-600 border-2 font-medium text-white transition duration-200 rounded shadow-md hover:text-yellow-600 bg-black"
+              >
+                {loading ? (
+                  <TbFidgetSpinner className="m-auto animate-spin" size={24} />
+                ) : (
+                  "Sign up"
+                )}
+              </button>
             </div>
           </form>
 

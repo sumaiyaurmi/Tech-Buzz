@@ -1,10 +1,10 @@
 import axios from "axios";
-import  { useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://assignment-12-server-zeta-swart.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -22,7 +22,7 @@ const useAxiosSecure = () => {
     },
     function (error) {
       return Promise.reject(error);
-    }  
+    }
   );
 
   // intercepts 401 and 403 status
