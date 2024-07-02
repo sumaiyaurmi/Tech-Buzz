@@ -5,30 +5,29 @@
 
 
 
-## Learners Live link
+## Tech Buzz live link
 
 [ Site live Link](https://techbuzz-e2076.web.app/)(https://techbuzz-e2076.web.app/)
 
 
-## Features of Tech Buzz
-*  Comprehensive Tech Product Listings:
- Discover and explore a diverse range of tech products, including web apps, AI tools, software, and mobile apps, all curated in one platform.
+## Project Overview
+- Tech-Buzz is a web platform that aggregates and curates the latest news and updates from the world of technology.
+- It aims to solve the problem of information overload by providing users with a streamlined view of tech news from various sources.
 
-* User-Driven Voting System:
- Engage with the community by upvoting or downvoting products. The voting system ensures the most popular and high-quality products are easily accessible
+## Features
+- **Real-time Updates:** Get instant updates on the latest tech news as they happen.
+- **Personalization:** Customize your feed based on your interests and preferences.
+- **Search Functionality:** Easily find specific articles or topics of interest.
 
-* Detailed Product Reviews: 
-Share your insights and read detailed reviews from other users. Each product page features user-generated reviews to help you make informed decisions.
+## Technology Used
+- Frontend: HTML5, CSS3, JavaScript, React
+- Backend: Node.js, Express
+- Database: MongoDB
+- External APIs for news aggregation
 
-* Secure User Authentication:
-Robust authentication system with roles for normal users, moderators, and admins. Each role has specific permissions, ensuring a secure and well-managed platform.
-* Admin Management Tools:
- Admins have access to a comprehensive dashboard to manage products, users, and coupons. Add, edit, and delete products and coupons efficiently with an intuitive interface.e.
-
-
-
-###  Assignment_ID
-
-assignment12_category_0015
-
-
+## Installation and Setup
+To clone and run this project locally, follow these steps:
+1. Clone the repository: `git clone https://github.com/sumaiyaurmi/Tech-Buzz.git`
+2. Navigate to the project directory: `cd Learners`
+3. Install dependencies: `npm install`
+4. Start the development server: `npm start`
