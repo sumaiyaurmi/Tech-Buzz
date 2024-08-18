@@ -28,6 +28,6 @@
 ## Installation and Setup
 To clone and run this project locally, follow these steps:
 1. Clone the repository: `git clone https://github.com/sumaiyaurmi/Tech-Buzz.git`
-2. Navigate to the project directory: `cd Learners`
+2. Navigate to the project directory: `cd Tech-Buzz`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
